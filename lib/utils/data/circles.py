@@ -10,7 +10,7 @@ def _sample_in_unit_circle(size=1):
     return np.array([[r*cos(theta), r*sin(theta)] for r, theta in zip(radii, thetas)])
 
 def generate_instance(L, k):
-    centers = torch.from_numpy(0.5 * _sample_in_unit_circle(k)) # (k, 2)
+    centers = torch.from_numpy(0.5 * _sample_in_unit_circle(k)).to(dtype=torch.float) # (k, 2)
     radii   = torch.clamp(torch.normal(0.3, 0.1, size=(k,)), min=0.2, max=0.4) # (k,)
     freqs   = np.random.multinomial(L-k, [1/k,]*k) + 1
     labels  = torch.from_numpy(np.repeat(np.arange(k), freqs)) # (L,)
